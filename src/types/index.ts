@@ -9,6 +9,7 @@ export interface Post {
 
 export interface Project {
   id: string;
+  githubId?: number;
   title: string;
   year: string;
   tag: string;
@@ -16,6 +17,7 @@ export interface Project {
   imageUrl: string;
   imageAlt: string;
   technologies?: string[];
+  repoUrl?: string;
 }
 
 export interface SocialLink {

@@ -1,4 +1,4 @@
-import type { NavItem, Post, Project, SocialLink } from '@/types';
+import type { NavItem, Project, SocialLink } from '@/types';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', href: '#home' },
@@ -15,66 +15,41 @@ export const HERO_DATA = {
   avatarAlt: 'Roberto Aleydon profile photo'
 } as const;
 
-export const POSTS: Post[] = [
-  {
-    id: 'post-1',
-    title: 'Making a design system from scratch',
-    date: '12 Feb 2020',
-    categories: ['Design', 'Pattern'],
-    excerpt:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    slug: 'making-a-design-system-from-scratch'
-  },
-  {
-    id: 'post-2',
-    title: 'Creating pixel perfect icons in Figma',
-    date: '12 Feb 2020',
-    categories: ['Figma', 'Icon Design'],
-    excerpt:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    slug: 'creating-pixel-perfect-icons-in-figma'
-  }
-];
-
+// Keeping only relevant projects or an empty array if we want only GitHub ones
+// But having some manual control is good for descriptions
 export const PROJECTS: Project[] = [
   {
-    id: 'proj-1',
-    title: 'Pomodoro Timer',
-    year: '2026',
-    tag: 'Productive',
-    excerpt: 'Pomodoro Technique website for time management',
-    imageUrl: '/images/chronos-pomodoro.png',
-    imageAlt: 'Pomodoro timer preview',
+    id: 'e-commerce',
+    title: 'Bewear E-commerce',
+    year: '2024',
+    tag: 'Full Stack',
+    excerpt:
+      'A modern e-commerce platform built with Next.js, featuring a robust product catalog, shopping cart, and secure authentication.',
+    imageUrl: '/images/dashboard-preview.svg', // Fallback, but lib/github will override if it finds a better one
+    imageAlt: 'E-commerce preview',
     technologies: [
       'React',
       'Next.js',
+      'TypeScript',
       'Tailwind',
-      'Css',
-      'Docker',
       'PostgreSQL',
-      'GitHub',
-      'Jest'
-    ]
+      'Docker',
+      'Jest',
+      'Storybook'
+    ],
+    repoUrl: 'https://github.com/Aleydon/e-commerce'
   },
   {
-    id: 'proj-2',
-    title: 'Vibrant Portraits of 2020',
-    year: '2018',
-    tag: 'Illustration',
+    id: 'Pomodoro-Timer',
+    title: 'Chronos Pomodoro',
+    year: '2024',
+    tag: 'Productivity',
     excerpt:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    imageUrl: '/images/portrait-preview.svg',
-    imageAlt: 'Vibrant portrait illustration'
-  },
-  {
-    id: 'proj-3',
-    title: '36 Days of Malayalam type',
-    year: '2018',
-    tag: 'Typography',
-    excerpt:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    imageUrl: '/images/typography-preview.svg',
-    imageAlt: 'Malayalam typography project'
+      'Efficient time management tool based on the Pomodoro Technique to help users stay focused and productive.',
+    imageUrl: '/images/chronos-pomodoro.png',
+    imageAlt: 'Pomodoro timer preview',
+    technologies: ['React', 'Vite', 'Tailwind', 'CSS', 'TypeScript'],
+    repoUrl: 'https://github.com/Aleydon/Pomodoro-Timer'
   }
 ];
 

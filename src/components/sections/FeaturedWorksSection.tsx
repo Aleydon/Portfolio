@@ -1,9 +1,11 @@
-import { PROJECTS } from '@/lib/data';
+import { getGitHubProjects } from '@/lib/github';
 import Container from '../ui/Container';
 import ProjectCard from '../ui/ProjectCard';
 import SectionLabel from '../ui/SectionLabel';
 
-export default function FeaturedWorksSection() {
+export default async function FeaturedWorksSection() {
+  const allProjects = await getGitHubProjects();
+
   return (
     <section
       id="projects"
@@ -15,17 +17,22 @@ export default function FeaturedWorksSection() {
           <span id="featured-works-heading">Featured works</span>
         </SectionLabel>
 
-        {/* Divider list — matches design's horizontal card layout on desktop */}
         <div className="divide-y divide-[#e8eaed]">
-          {PROJECTS.map((project, i) => (
-            <div
-              key={project.id}
-              className="animate-fade-in-up"
-              style={{ animationDelay: `${i * 100}ms` }}
-            >
-              <ProjectCard project={project} />
-            </div>
-          ))}
+          {allProjects.length > 0 ? (
+            allProjects.map((project, i) => (
+              <div
+                key={project.id}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${i * 100}ms` }}
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))
+          ) : (
+            <p className="py-10 text-center text-gray-500">
+              No projects found.
+            </p>
+          )}
         </div>
       </Container>
     </section>

@@ -1,14 +1,4 @@
-import {
-  CssIcon,
-  GitHubIcon,
-  JestIcon,
-  ReactIcon
-} from '@/components/ui/icons';
-import { DockerIcon } from '@/components/ui/icons/DockerIcon';
-import { NextIcon } from '@/components/ui/icons/NextIcon';
-import { PostgreSql } from '@/components/ui/icons/PostgreSql';
-import { TailwindIcon } from '@/components/ui/icons/TailwindIcon';
-
+import * as Icons from '@/components/ui/icons';
 import type { IconProps } from '@/components/ui/icons/types';
 import type { ComponentType } from 'react';
 
@@ -20,26 +10,54 @@ export type IconName =
   | 'docker'
   | 'postgresql'
   | 'github'
-  | 'jest';
+  | 'jest'
+  | 'typescript'
+  | 'javascript'
+  | 'storybook'
+  | 'vite'
+  | 'prisma'
+  | 'drizzle';
 
 export const ICON_MAP: Record<IconName, ComponentType<IconProps>> = {
-  react: ReactIcon,
-  nextjs: NextIcon,
-  tailwind: TailwindIcon,
-  css: CssIcon,
-  docker: DockerIcon,
-  postgresql: PostgreSql,
-  github: GitHubIcon,
-  jest: JestIcon
+  react: Icons.ReactIcon,
+  nextjs: Icons.NextIcon,
+  tailwind: Icons.TailwindIcon,
+  css: Icons.CssIcon,
+  docker: Icons.DockerIcon,
+  postgresql: Icons.PostgreSql,
+  github: Icons.GitHubIcon,
+  jest: Icons.JestIcon,
+  // Mapping missing ones to most relevant or github as fallback for now
+  typescript: Icons.ReactIcon, // Placeholder or use a generic one
+  javascript: Icons.ReactIcon,
+  storybook: Icons.ReactIcon,
+  vite: Icons.ReactIcon,
+  prisma: Icons.PostgreSql,
+  drizzle: Icons.PostgreSql
 };
 
 export const TECHNOLOGY_ICONS: Record<string, IconName> = {
+  // Common names
   React: 'react',
   'Next.js': 'nextjs',
+  Nextjs: 'nextjs',
   Tailwind: 'tailwind',
+  TailwindCSS: 'tailwind',
+  'Tailwind CSS': 'tailwind',
+  CSS: 'css',
   Css: 'css',
   Docker: 'docker',
   PostgreSQL: 'postgresql',
+  Postgres: 'postgresql',
   GitHub: 'github',
-  Jest: 'jest'
+  Github: 'github',
+  Jest: 'jest',
+  TypeScript: 'typescript',
+  Typescript: 'typescript',
+  JavaScript: 'javascript',
+  Javascript: 'javascript',
+  Storybook: 'storybook',
+  Vite: 'vite',
+  Prisma: 'prisma',
+  Drizzle: 'drizzle'
 };
