@@ -5,7 +5,6 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection />
-      {/* @ts-expect-error Server Component */}
       <FeaturedWorksSection />
     </main>
   );
