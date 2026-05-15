@@ -50,6 +50,37 @@ export const PROJECTS: Project[] = [
     imageAlt: 'Pomodoro timer preview',
     technologies: ['React', 'Vite', 'Tailwind', 'CSS', 'TypeScript'],
     repoUrl: 'https://github.com/Aleydon/Pomodoro-Timer'
+  },
+  {
+    id: 'ODS-8 Cruzeiro do Sul',
+    title: 'ODS-8 Cruzeiro do Sul',
+    year: '2024',
+    tag: 'Education',
+    excerpt:
+      'Android/iOS application using React Native and Supabase focused on the economic growth of micro-entrepreneurs.  the user has complete control over their invested capital and avoids waste.',
+    imageUrl: '/images/ods8.png',
+    imageAlt: 'ODS-8 preview',
+    technologies: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'Tailwind',
+      'PostgreSQL',
+      'Jest'
+    ],
+    repoUrl: 'https://github.com/Aleydon/ODS-8'
+  },
+  {
+    id: 'Agency-X',
+    title: 'Agency-X',
+    year: '2024',
+    tag: 'Web',
+    excerpt:
+      'A modern web application built with Next.js, featuring a sleek design and intuitive user interface.',
+    imageUrl: '/images/agency.png',
+    imageAlt: 'Agency-X preview',
+    technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind'],
+    repoUrl: 'https://github.com/Aleydon/Agency-X'
   }
 ];
 

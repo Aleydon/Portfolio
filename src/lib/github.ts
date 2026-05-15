@@ -2,7 +2,7 @@ import { type Project } from '@/types';
 import { PROJECTS as STATIC_PROJECTS } from './data';
 
 const GITHUB_USERNAME = 'Aleydon';
-const FEATURED_REPOS = ['e-commerce', 'Pomodoro-Timer'];
+const FEATURED_REPOS = ['e-commerce', 'Pomodoro-Timer', 'ODS-8', 'Agency-X']; // Add repo names you want to feature, or rely on the 'portfolio-featured' topic in GitHub
 
 interface GitHubRepo {
   id: number;
@@ -16,13 +16,15 @@ interface GitHubRepo {
 
 // Helper to find a potential cover image in the repo
 async function getRepoCoverImage(repoName: string): Promise<string> {
-  const branches = ['main', 'master'];
+  const branches = ['main', 'master', 'Aleydon'];
   const possiblePaths = [
     'assets/next14.png',
     'public/banner.png',
     'public/banner-2.png',
     'assets/storybok_screen_shot.png',
-    'assets/React-Vite.png'
+    'assets/React-Vite.png',
+    'assets/images/icon.png',
+    'img/screenshots/agency-list-details.png'
   ];
 
   for (const branch of branches) {
@@ -32,7 +34,7 @@ async function getRepoCoverImage(repoName: string): Promise<string> {
         const res = await fetch(url, { method: 'HEAD' });
         if (res.ok) return url;
       } catch (e) {
-        // Continue
+        throw new Error(`Error checking image URL: ${url}`, { cause: e });
       }
     }
   }

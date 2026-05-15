@@ -37,24 +37,18 @@ export const ICON_MAP: Record<IconName, ComponentType<IconProps>> = {
 };
 
 export const TECHNOLOGY_ICONS: Record<string, IconName> = {
-  // Common names
   React: 'react',
   'Next.js': 'nextjs',
   Nextjs: 'nextjs',
   Tailwind: 'tailwind',
-  TailwindCSS: 'tailwind',
   'Tailwind CSS': 'tailwind',
   CSS: 'css',
-  Css: 'css',
   Docker: 'docker',
   PostgreSQL: 'postgresql',
   Postgres: 'postgresql',
   GitHub: 'github',
-  Github: 'github',
   Jest: 'jest',
   TypeScript: 'typescript',
-  Typescript: 'typescript',
-  JavaScript: 'javascript',
   Javascript: 'javascript',
   Storybook: 'storybook',
   Vite: 'vite',
