@@ -1,4 +1,4 @@
-import type { NavItem, Project, SocialLink } from '@/types';
+import type { NavItem, Post, Project, SocialLink } from '@/types';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', href: '#home' },
@@ -78,5 +78,26 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'GitHub',
     href: 'https://github.com/Aleydon',
     icon: 'github'
+  }
+];
+
+export const POSTS: Post[] = [
+  {
+    id: '1',
+    title: 'How to build a modern portfolio with Next.js',
+    date: '2024-05-15',
+    categories: ['Next.js', 'React', 'TypeScript'],
+    excerpt:
+      'Learn the best practices for building a high-performance portfolio using Next.js 15 and React 19.',
+    slug: 'modern-portfolio-nextjs'
+  },
+  {
+    id: '2',
+    title: 'Mastering Tailwind CSS for layout design',
+    date: '2024-04-20',
+    categories: ['Tailwind CSS', 'Design'],
+    excerpt:
+      'Discover advanced techniques for creating complex and responsive layouts with Tailwind CSS.',
+    slug: 'mastering-tailwind-css'
   }
 ];
