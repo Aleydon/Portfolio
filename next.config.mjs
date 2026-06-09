@@ -13,6 +13,12 @@ const nextConfig = {
         hostname: 'raw.githubusercontent.com',
         port: '',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.ctfassets.net',
+        port: '',
+        pathname: '/**'
       }
     ]
   }

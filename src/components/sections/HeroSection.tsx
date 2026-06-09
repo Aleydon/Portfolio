@@ -1,56 +1,115 @@
+'use client';
+
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 import { HERO_DATA } from '@/lib/data';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 export default function HeroSection() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <section
       aria-label="Introduction"
-      className="bg-white pt-24 pb-16 md:pt-32 md:pb-24 lg:pt-36 lg:pb-28"
+      className="relative overflow-hidden bg-white pt-32 pb-20 md:pt-48 md:pb-32"
     >
+      {/* Background decoration */}
+      <div className="bg-brand-accent/5 absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full blur-3xl" />
+      <div className="bg-brand-accent/5 absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] rounded-full blur-3xl" />
+
       <Container>
-        {/*
-         * Mobile  → flex-col, centered text
-         * md+     → flex-row, text left / avatar right
-         * xl+     → larger text, taller avatar
-         */}
-        <div className="flex flex-col-reverse items-center gap-8 text-center md:flex-row md:items-center md:justify-between md:gap-12 md:text-left lg:gap-16 xl:gap-20">
+        <div className="flex flex-col-reverse items-center gap-12 text-center md:flex-row md:items-center md:justify-between md:gap-16 md:text-left">
           {/* ── Text block ─────────────────────────────── */}
-          <div className="flex flex-col items-center md:max-w-lg md:items-start lg:max-w-xl xl:max-w-2xl">
-            <h1
-              className="animate-fade-in-up font-display mb-4 text-4xl leading-tight font-semibold text-[#1a1f3a] sm:text-5xl lg:mb-6 lg:text-6xl xl:text-[4.5rem] 2xl:text-7xl"
-              style={{ letterSpacing: '-0.02em' }}
+          <motion.div
+            variants={staggerContainer}
+            initial={mounted ? 'initial' : false}
+            animate={mounted ? 'animate' : false}
+            className="flex max-w-2xl flex-col items-center md:items-start"
+          >
+            <motion.h1
+              variants={fadeInUp}
+              className="text-brand-primary mb-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
             >
-              Hi, I am {HERO_DATA.name},
+              Hi, I am Roberto,
               <br />
-              Full Stack Developer
-            </h1>
+              <span className="text-brand-accent">{HERO_DATA.title}</span>
+            </motion.h1>
 
-            <p className="animate-fade-in-up mb-8 max-w-sm text-base leading-relaxed text-[#6b7280] delay-100 sm:text-lg md:max-w-md lg:mb-10 lg:max-w-lg lg:text-xl">
+            <motion.p
+              variants={fadeInUp}
+              className="text-brand-secondary mb-10 max-w-lg text-lg leading-relaxed lg:text-xl"
+            >
               {HERO_DATA.bio}
-            </p>
+            </motion.p>
 
-            <div className="animate-fade-in-up delay-200">
-              <Button as="a" href={HERO_DATA.resumeUrl} size="md">
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-wrap items-center justify-center gap-4 md:justify-start"
+            >
+              <Button
+                as="a"
+                href={HERO_DATA.resumeUrl}
+                size="lg"
+                className="rounded-full px-8"
+              >
                 Download Resume
               </Button>
-            </div>
-          </div>
+              <Button
+                variant="secondary"
+                as="a"
+                href="#projects"
+                size="lg"
+                className="rounded-full px-8"
+              >
+                View Projects
+              </Button>
+            </motion.div>
+          </motion.div>
 
           {/* ── Avatar ─────────────────────────────────── */}
-          <div className="animate-scale-in flex-shrink-0 delay-300">
-            <div className="bg-[#1a1f3a]shadow-2xl relative h-36 w-36 overflow-hidden rounded-full ring-[#e8eaed] sm:h-48 sm:w-48 md:h-60 md:w-60 lg:h-72 lg:w-72 xl:h-80 xl:w-80 2xl:h-96 2xl:w-96">
+          <motion.div
+            initial={mounted ? { opacity: 0, scale: 0.9 } : false}
+            animate={mounted ? { opacity: 1, scale: 1 } : false}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            className="relative"
+          >
+            <div className="bg-brand-muted relative h-64 w-64 overflow-hidden rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-105 sm:h-80 sm:w-80 lg:h-[400px] lg:w-[400px]">
               <Image
                 src={HERO_DATA.avatarUrl}
                 alt={HERO_DATA.avatarAlt}
                 fill
-                sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, (max-width: 1024px) 240px, (max-width: 1280px) 288px, 384px"
+                sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 400px"
                 className="object-cover"
                 priority
               />
             </div>
-          </div>
+            {/* Decorative element */}
+            <motion.div
+              animate={mounted ? { rotate: 360 } : false}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              className="border-brand-accent/30 absolute -top-4 -right-4 -z-10 h-24 w-24 rounded-full border border-dashed"
+            />
+          </motion.div>
         </div>
       </Container>
     </section>

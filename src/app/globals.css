@@ -1,39 +1,35 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-sans: 'Inter', 'DM Sans', system-ui, sans-serif;
   --font-display: 'Fraunces', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Brand colors */
-  --color-brand-coral: #ff5e5b;
-  --color-brand-coral-dark: #e04845;
-  --color-brand-navy: #1a1f3a;
-  --color-brand-indigo: #3d4a8a;
-  --color-brand-slate: #6b7280;
-  --color-brand-muted: #f5f6f8;
+  /* Brand colors - Minimalist Palette */
+  --color-brand-primary: #111111;
+  --color-brand-secondary: #444444;
+  --color-brand-accent: #3b82f6;
+  --color-brand-muted: #f9fafb;
+  --color-brand-border: #e5e7eb;
   --color-brand-card: #ffffff;
-  --color-brand-border: #e8eaed;
-  --color-brand-tag-bg: #e8ecf5;
-  --color-brand-tag-text: #3d4a8a;
 
   /* Spacing scale */
-  --spacing-section: 2.5rem;
+  --spacing-section: 4rem;
 
   /* Container max-widths */
-  --container-7xl: 80rem; /* 1280px — large desktop */
-  --container-8xl: 96rem; /* 1536px — 2xl */
-  --container-9xl: 120rem; /* 1920px — TV / ultrawide */
+  --container-7xl: 80rem;
+  --container-8xl: 96rem;
 
-  /* Border radius */
-  --radius-card: 0.75rem;
-  --radius-btn: 0.5rem;
+  /* Border radius - Smoother */
+  --radius-card: 1rem;
+  --radius-btn: 0.625rem;
   --radius-tag: 999px;
-  --radius-avatar: 999px;
 
-  /* Shadows */
-  --shadow-card: 0 2px 16px 0 rgba(26, 31, 58, 0.07);
-  --shadow-btn: 0 4px 16px 0 rgba(255, 94, 91, 0.35);
+  /* Shadows - Subtle */
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05),
+    0 2px 8px -1px rgba(0, 0, 0, 0.03);
+  --shadow-btn: 0 4px 14px 0 rgba(59, 130, 246, 0.25);
+  --shadow-header: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 }
 
 /* Base */
@@ -51,8 +47,8 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: #ffffff;
-  color: var(--color-brand-navy);
+  background-color: #fafafa;
+  color: var(--color-brand-primary);
   min-height: 100dvh;
 }
 

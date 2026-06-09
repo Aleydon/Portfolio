@@ -1,4 +1,4 @@
-import type { NavItem, Post, Project, SocialLink } from '@/types';
+import type { NavItem, SocialLink } from '@/types';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', href: '#home' },
@@ -11,78 +11,9 @@ export const HERO_DATA = {
   title: 'Aleydon',
   bio: 'A dedicated Full Stack Developer focused on building functional and responsive web applications. I enjoy tackling new challenges and transforming ideas into clean, working code while constantly expanding my technical toolkit.',
   resumeUrl: '/resume.pdf',
-  avatarUrl: '/images/avatar.jpeg',
+  avatarUrl: '/images/avatar.png',
   avatarAlt: 'Roberto Aleydon profile photo'
 } as const;
-
-// Keeping only relevant projects or an empty array if we want only GitHub ones
-// But having some manual control is good for descriptions
-export const PROJECTS: Project[] = [
-  {
-    id: 'e-commerce',
-    title: 'Bewear E-commerce',
-    year: '2024',
-    tag: 'Full Stack',
-    excerpt:
-      'A modern e-commerce platform built with Next.js, featuring a robust product catalog, shopping cart, and secure authentication.',
-    imageUrl: '/images/dashboard-preview.svg', // Fallback, but lib/github will override if it finds a better one
-    imageAlt: 'E-commerce preview',
-    technologies: [
-      'React',
-      'Next.js',
-      'TypeScript',
-      'Tailwind',
-      'PostgreSQL',
-      'Docker',
-      'Jest',
-      'Storybook'
-    ],
-    repoUrl: 'https://github.com/Aleydon/e-commerce'
-  },
-  {
-    id: 'Pomodoro-Timer',
-    title: 'Chronos Pomodoro',
-    year: '2024',
-    tag: 'Productivity',
-    excerpt:
-      'Efficient time management tool based on the Pomodoro Technique to help users stay focused and productive.',
-    imageUrl: '/images/chronos-pomodoro.png',
-    imageAlt: 'Pomodoro timer preview',
-    technologies: ['React', 'Vite', 'Tailwind', 'CSS', 'TypeScript'],
-    repoUrl: 'https://github.com/Aleydon/Pomodoro-Timer'
-  },
-  {
-    id: 'ODS-8 Cruzeiro do Sul',
-    title: 'ODS-8 Cruzeiro do Sul',
-    year: '2024',
-    tag: 'Education',
-    excerpt:
-      'Android/iOS application using React Native and Supabase focused on the economic growth of micro-entrepreneurs.  the user has complete control over their invested capital and avoids waste.',
-    imageUrl: '/images/ods8.png',
-    imageAlt: 'ODS-8 preview',
-    technologies: [
-      'React',
-      'Next.js',
-      'TypeScript',
-      'Tailwind',
-      'PostgreSQL',
-      'Jest'
-    ],
-    repoUrl: 'https://github.com/Aleydon/ODS-8'
-  },
-  {
-    id: 'Agency-X',
-    title: 'Agency-X',
-    year: '2024',
-    tag: 'Web',
-    excerpt:
-      'A modern web application built with Next.js, featuring a sleek design and intuitive user interface.',
-    imageUrl: '/images/agency.png',
-    imageAlt: 'Agency-X preview',
-    technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind'],
-    repoUrl: 'https://github.com/Aleydon/Agency-X'
-  }
-];
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
@@ -109,26 +40,5 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'GitHub',
     href: 'https://github.com/Aleydon',
     icon: 'github'
-  }
-];
-
-export const POSTS: Post[] = [
-  {
-    id: '1',
-    title: 'How to build a modern portfolio with Next.js',
-    date: '2024-05-15',
-    categories: ['Next.js', 'React', 'TypeScript'],
-    excerpt:
-      'Learn the best practices for building a high-performance portfolio using Next.js 15 and React 19.',
-    slug: 'modern-portfolio-nextjs'
-  },
-  {
-    id: '2',
-    title: 'Mastering Tailwind CSS for layout design',
-    date: '2024-04-20',
-    categories: ['Tailwind CSS', 'Design'],
-    excerpt:
-      'Discover advanced techniques for creating complex and responsive layouts with Tailwind CSS.',
-    slug: 'mastering-tailwind-css'
   }
 ];

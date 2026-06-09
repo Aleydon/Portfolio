@@ -7,6 +7,12 @@ export interface Post {
   slug: string;
 }
 
+export interface ProjectFeature {
+  title: string;
+  description: string;
+  imageUrls: string[];
+}
+
 export interface Project {
   id: string;
   githubId?: number;
@@ -14,10 +20,14 @@ export interface Project {
   year: string;
   tag: string;
   excerpt: string;
+  description?: string;
   imageUrl: string;
   imageAlt: string;
+  gallery?: string[];
   technologies?: string[];
   repoUrl?: string;
+  projectUrl?: string;
+  features?: ProjectFeature[];
 }
 
 export interface SocialLink {

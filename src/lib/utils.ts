@@ -1,15 +1,23 @@
-/**
- * Joins class names together, filtering out falsy values.
- */
-export function cn(
-  ...classes: Array<string | undefined | null | false>
-): string {
-  return classes.filter(Boolean).join(' ');
+import { type ClassValue, clsx } from 'clsx';
+
+export function cn(...inputs: ClassValue[]) {
+  return clsx(inputs);
 }
 
-/**
- * Formats a date string for display.
- */
-export function formatDate(dateStr: string): string {
-  return dateStr;
+export function contentfulLoader({
+  src,
+  width,
+  quality
+}: {
+  src: string;
+  width: number;
+  quality?: number;
+}) {
+  const url = new URL(src);
+  url.searchParams.set('fm', 'webp');
+  url.searchParams.set('w', width.toString());
+  if (quality) {
+    url.searchParams.set('q', quality.toString());
+  }
+  return url.toString();
 }

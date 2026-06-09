@@ -1,35 +1,36 @@
-import { getGitHubProjects } from '@/lib/github';
+import { getContentfulProjects } from '@/lib/contentful';
 import Container from '../ui/Container';
 import ProjectCard from '../ui/ProjectCard';
 import SectionLabel from '../ui/SectionLabel';
 
 export default async function FeaturedWorksSection() {
-  const allProjects = await getGitHubProjects();
+  const allProjects = await getContentfulProjects();
 
   return (
     <section
       id="projects"
       aria-labelledby="featured-works-heading"
-      className="bg-white py-12 sm:py-16 lg:py-20 2xl:py-24"
+      className="bg-white py-24 sm:py-32"
     >
       <Container>
-        <SectionLabel viewAllHref="/work" viewAllLabel="View all work">
-          <span id="featured-works-heading">Featured works</span>
-        </SectionLabel>
+        <div className="mb-16">
+          <SectionLabel viewAllHref="/work" viewAllLabel="View all work">
+            <span
+              id="featured-works-heading"
+              className="text-brand-secondary text-sm font-bold tracking-widest uppercase"
+            >
+              Featured works
+            </span>
+          </SectionLabel>
+        </div>
 
-        <div className="divide-y divide-[#e8eaed]">
+        <div className="flex flex-col gap-12 sm:gap-16">
           {allProjects.length > 0 ? (
-            allProjects.map((project, i) => (
-              <div
-                key={project.id}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${i * 100}ms` }}
-              >
-                <ProjectCard project={project} />
-              </div>
+            allProjects.map(project => (
+              <ProjectCard key={project.id} project={project} />
             ))
           ) : (
-            <p className="py-10 text-center text-gray-500">
+            <p className="text-brand-secondary py-20 text-center">
               No projects found.
             </p>
           )}

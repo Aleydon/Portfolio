@@ -1,132 +1,158 @@
 'use client';
 
-import { NAV_ITEMS } from '@/lib/data';
-import { cn } from '@/lib/utils';
+import { HERO_DATA, NAV_ITEMS } from '@/lib/data';
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform
+} from 'framer-motion';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-// Only "Works", "Blog", "Contact" show in the desktop header per the design
 const DESKTOP_NAV = NAV_ITEMS.filter(item =>
   ['Home', 'Projects', 'Contact'].includes(item.label)
 );
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { scrollY } = useScroll();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const headerBg = useTransform(
+    scrollY,
+    [0, 50],
+    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.8)']
+  );
+
+  const headerBorder = useTransform(
+    scrollY,
+    [0, 50],
+    ['rgba(229, 231, 235, 0)', 'rgba(229, 231, 235, 1)']
+  );
+
+  const headerBlur = useTransform(
+    scrollY,
+    [0, 50],
+    ['blur(0px)', 'blur(12px)']
+  );
 
   return (
     <>
-      <header
+      <motion.header
         id="home"
-        className="fixed top-0 right-0 left-0 z-50 border-b border-[#e8eaed]/60 bg-white/95 backdrop-blur-md"
+        style={
+          mounted
+            ? {
+                backgroundColor: headerBg,
+                borderBottomColor: headerBorder,
+                backdropFilter: headerBlur
+              }
+            : {}
+        }
+        className="fixed top-0 right-0 left-0 z-50 border-b transition-colors duration-300"
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
-          {/* Logo — visible md+ */}
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
           <Link
             href="/"
-            className="font-display hidden text-lg font-semibold text-[#1a1f3a] transition-colors hover:text-[#FF5E5B] md:block"
+            className="text-brand-primary text-lg font-bold tracking-tight transition-opacity hover:opacity-70"
           >
-            Aleydon
+            {HERO_DATA.title || HERO_DATA.name.split(' ')[0]}
           </Link>
 
-          {/* Desktop navigation */}
           <nav
             aria-label="Main navigation"
-            className="hidden items-center gap-1 md:flex"
+            className="hidden items-center gap-2 md:flex"
           >
             {DESKTOP_NAV.map(item => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-4 py-2 text-[15px] font-medium text-[#1a1f3a] transition-all duration-150 hover:bg-[#f5f6f8] hover:text-[#FF5E5B]"
+                className="text-brand-secondary hover:text-brand-primary rounded-full px-4 py-2 text-sm font-medium transition-all hover:bg-black/5"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          {/* Mobile hamburger — only visible below md */}
-          <div className="ml-auto flex md:hidden">
+          <div className="flex md:hidden">
             <button
               aria-label={isOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isOpen}
-              aria-controls="mobile-drawer"
               onClick={() => {
                 setIsOpen(prev => !prev);
               }}
-              className="flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[6px] rounded-lg transition-colors hover:bg-black/5"
+              className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full bg-black/5 transition-colors hover:bg-black/10"
             >
-              <span
-                className={cn(
-                  'block h-0.5 w-6 origin-center rounded-full bg-[#1a1f3a] transition-all duration-300',
-                  isOpen && 'translate-y-2 rotate-45'
-                )}
+              <motion.span
+                animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                className="bg-brand-primary h-0.5 w-5 rounded-full"
               />
-              <span
-                className={cn(
-                  'block h-0.5 w-6 rounded-full bg-[#1a1f3a] transition-all duration-300',
-                  isOpen && 'scale-x-0 opacity-0'
-                )}
+              <motion.span
+                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+                className="bg-brand-primary h-0.5 w-5 rounded-full"
               />
-              <span
-                className={cn(
-                  'block h-0.5 w-6 origin-center rounded-full bg-[#1a1f3a] transition-all duration-300',
-                  isOpen && '-translate-y-2 -rotate-45'
-                )}
+              <motion.span
+                animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                className="bg-brand-primary h-0.5 w-5 rounded-full"
               />
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
-      {/* Mobile overlay */}
-      <div
-        className={cn(
-          'fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:hidden',
-          isOpen
-            ? 'pointer-events-auto opacity-100'
-            : 'pointer-events-none opacity-0'
-        )}
-        onClick={() => {
-          setIsOpen(false);
-        }}
-        aria-hidden="true"
-      />
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => {
+                setIsOpen(false);
+              }}
+              className="fixed inset-0 z-40 bg-white/60 backdrop-blur-sm md:hidden"
+            />
 
-      {/* Mobile drawer */}
-      <nav
-        id="mobile-drawer"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Mobile navigation"
-        className={cn(
-          'fixed top-0 right-0 z-50 flex h-full w-72 flex-col bg-white px-6 pt-20 pb-10 shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden',
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        )}
-      >
-        <ul className="flex flex-col gap-1">
-          {NAV_ITEMS.map((item, i) => (
-            <li
-              key={item.href}
-              className="animate-slide-down"
-              style={{ animationDelay: `${i * 60}ms` }}
+            <motion.nav
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 z-50 flex w-full max-w-sm flex-col bg-white px-8 pt-24 pb-12 shadow-2xl md:hidden"
             >
-              <Link
-                href={item.href}
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-                className="block rounded-lg px-4 py-3 text-lg font-medium text-[#1a1f3a] transition-colors duration-150 hover:bg-[#f5f6f8] hover:text-[#FF5E5B]"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+              <ul className="flex flex-col gap-4">
+                {NAV_ITEMS.map((item, i) => (
+                  <motion.li
+                    key={item.href}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + i * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => {
+                        setIsOpen(false);
+                      }}
+                      className="text-brand-primary hover:text-brand-accent text-3xl font-bold tracking-tight transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
 
-        <div className="mt-auto text-sm text-[#6b7280]">
-          © {new Date().getFullYear()} John Doe
-        </div>
-      </nav>
+              <div className="border-brand-border text-brand-secondary mt-auto border-t pt-8 text-sm">
+                © {new Date().getFullYear()} {HERO_DATA.name}
+              </div>
+            </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }
