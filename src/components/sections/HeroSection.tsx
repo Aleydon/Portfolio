@@ -57,7 +57,8 @@ export default function HeroSection() {
       <div className="bg-brand-accent/5 absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] rounded-full blur-3xl" />
 
       <Container>
-        <div className="flex flex-col-reverse items-center gap-12 text-center md:flex-row md:items-center md:justify-between md:gap-16 md:text-left">
+        {/* Inner wrapper with max-width to keep content integrated on ultra-wide screens */}
+        <div className="mx-auto flex max-w-6xl flex-col-reverse items-center gap-12 text-center md:flex-row md:items-center md:justify-between md:gap-16 md:text-left">
           {/* Text block */}
           <motion.div
             variants={staggerContainer}

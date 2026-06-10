@@ -67,8 +67,22 @@ export default function ProjectFeatures({ features }: ProjectFeaturesProps) {
                           <motion.div
                             key={imgIdx}
                             whileHover={{ scale: 1.03, y: -5 }}
-                            className="bg-brand-muted relative aspect-[16/9] w-full overflow-hidden rounded-3xl ring-1 shadow-2xl ring-black/5"
+                            className="bg-brand-muted relative aspect-[4/5] w-full overflow-hidden rounded-3xl ring-1 shadow-2xl ring-black/5 sm:aspect-[16/9]"
                           >
+                            {/* Blurred background for different aspect ratios */}
+                            <Image
+                              loader={
+                                isContentfulUrl(url)
+                                  ? contentfulLoader
+                                  : undefined
+                              }
+                              src={url}
+                              alt=""
+                              fill
+                              sizes="10px"
+                              className="scale-110 object-cover opacity-20 blur-2xl transition-transform duration-1000"
+                              aria-hidden="true"
+                            />
                             <Image
                               loader={
                                 isContentfulUrl(url)
@@ -79,7 +93,7 @@ export default function ProjectFeatures({ features }: ProjectFeaturesProps) {
                               alt={`${feature.title} image ${imgIdx + 1}`}
                               fill
                               sizes="(max-width: 768px) 100vw, 50vw"
-                              className="object-cover transition-transform duration-1000 hover:scale-105"
+                              className="relative z-10 object-contain transition-transform duration-1000 hover:scale-105"
                             />
                           </motion.div>
                         ))}

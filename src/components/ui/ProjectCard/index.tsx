@@ -35,19 +35,33 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         onClick={toggleExpand}
         className={`relative flex cursor-pointer flex-col gap-6 rounded-[2.5rem] border transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:gap-8 ${
           isExpanded
-            ? 'border-black/10 bg-white p-6 ring-1 shadow-2xl ring-black/5 sm:p-10'
-            : 'border-transparent bg-white/40 p-4 backdrop-blur-sm hover:border-black/5 hover:bg-white/80 hover:shadow-2xl sm:p-6'
+            ? 'border-black/10 bg-white p-4 ring-1 shadow-2xl ring-black/5 sm:p-8 lg:p-10'
+            : 'border-transparent bg-white/40 p-3 backdrop-blur-sm hover:border-black/5 hover:bg-white/80 hover:shadow-2xl sm:p-6'
         }`}
       >
         {/* Main Row: Thumbnail and Summary */}
-        <div className="flex flex-col gap-8 sm:gap-10 md:flex-row">
-          {/* Thumbnail */}
-          <div className="bg-brand-muted relative w-full flex-shrink-0 overflow-hidden rounded-3xl sm:w-72 md:w-96">
+        <div className="flex flex-col gap-8 md:flex-row lg:gap-12">
+          {/* Thumbnail - Large Rounded Card Look */}
+          <div className="bg-brand-muted relative w-full flex-shrink-0 overflow-hidden rounded-[2rem] sm:w-80 md:w-[400px] lg:w-[400px]">
             <motion.div
-              whileHover={{ scale: 1.08 }}
+              whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="relative aspect-[16/10] w-full"
+              className="relative aspect-[4/5] w-full sm:aspect-[16/10] md:aspect-[4/5]"
             >
+              {/* Blurred background for portrait images */}
+              <Image
+                loader={
+                  isContentfulUrl(project.imageUrl)
+                    ? contentfulLoader
+                    : undefined
+                }
+                src={project.imageUrl}
+                alt="Default project image"
+                fill
+                sizes="10px"
+                className="scale-110 rounded-2xl object-cover opacity-30 blur-2xl transition-transform duration-700"
+                aria-hidden="true"
+              />
               <Image
                 loader={
                   isContentfulUrl(project.imageUrl)
@@ -57,11 +71,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 src={project.imageUrl}
                 alt={project.imageAlt}
                 fill
-                sizes="(max-width: 768px) 100vw, 500px"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 600px"
+                className="relative z-10 object-contain transition-transform duration-700 group-hover:scale-100"
                 priority={false}
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute inset-0 z-20 bg-linear-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             </motion.div>
           </div>
 
@@ -71,7 +85,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               <motion.h3
                 custom={0}
                 variants={textVariants}
-                className="text-brand-primary group-hover:text-brand-accent text-3xl font-black tracking-tight transition-colors duration-500 sm:text-4xl"
+                className="text-brand-primary group-hover:text-brand-accent text-3xl font-black tracking-tight transition-colors duration-500 sm:text-4xl lg:text-5xl"
               >
                 {project.title}
               </motion.h3>
@@ -100,7 +114,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <motion.p
               custom={3}
               variants={textVariants}
-              className="text-brand-secondary mb-8 text-lg leading-relaxed font-medium opacity-80 sm:mb-10 sm:text-xl"
+              className="text-brand-secondary mb-8 text-lg leading-relaxed font-medium opacity-80 sm:mb-10 sm:text-xl lg:text-2xl"
             >
               {project.excerpt}
             </motion.p>

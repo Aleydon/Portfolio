@@ -32,15 +32,25 @@ export default function ProjectGallery({
             viewport={{ once: true }}
             variants={revealVariants}
             whileHover={{ y: -12, scale: 1.02 }}
-            className="bg-brand-muted relative aspect-[16/10] overflow-hidden rounded-3xl ring-1 shadow-2xl ring-black/5"
+            className="bg-brand-muted relative aspect-[4/5] overflow-hidden rounded-3xl ring-1 shadow-2xl ring-black/5 sm:aspect-[16/10]"
           >
+            {/* Blurred background for different aspect ratios */}
+            <Image
+              loader={isContentfulUrl(url) ? contentfulLoader : undefined}
+              src={url}
+              alt=""
+              fill
+              sizes="10px"
+              className="scale-110 object-cover opacity-20 blur-2xl transition-transform duration-1000"
+              aria-hidden="true"
+            />
             <Image
               loader={isContentfulUrl(url) ? contentfulLoader : undefined}
               src={url}
               alt={`${title} gallery ${idx + 1}`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-1000 hover:scale-110"
+              className="relative z-10 object-contain transition-transform duration-1000 hover:scale-110"
             />
           </motion.div>
         ))}
