@@ -1,11 +1,12 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import Container from '@/components/ui/Container';
-import { HERO_DATA } from '@/lib/data';
 import { motion, type Variants } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+
+import Button from '@/components/ui/Button';
+import Container from '@/components/ui/Container';
+import { HERO_DATA } from '@/lib/data';
 
 const fadeInUp: Variants = {
   initial: { opacity: 0, y: 20 },

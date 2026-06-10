@@ -1,7 +1,9 @@
 'use client';
 
-import type { Project } from '@/types';
 import { motion } from 'framer-motion';
+
+import type { Project } from '@/types';
+
 import ProjectFeatures from './ProjectFeatures';
 import ProjectGallery from './ProjectGallery';
 import ProjectTechnologies from './ProjectTechnologies';

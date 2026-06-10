@@ -1,11 +1,13 @@
 'use client';
 
-import Tag from '@/components/ui/Tag';
-import { contentfulLoader } from '@/lib/utils';
-import type { Project } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
+
+import Tag from '@/components/ui/Tag';
+import { contentfulLoader } from '@/lib/utils';
+import type { Project } from '@/types';
+
 import ProjectExpandedContent from './ProjectExpandedContent';
 import { isContentfulUrl, revealVariants, textVariants } from './types';
 

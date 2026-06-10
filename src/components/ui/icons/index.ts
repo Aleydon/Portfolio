@@ -1,5 +1,3 @@
-export type { IconProps } from './types';
-
 export { CssIcon } from './CssIcon';
 export { DockerIcon } from './DockerIcon';
 export { FacebookIcon } from './FacebookIcon';
@@ -12,3 +10,4 @@ export { PostgreSql } from './PostgreSql';
 export { ReactIcon } from './ReactIcon';
 export { TailwindIcon } from './TailwindIcon';
 export { TwitterIcon } from './TwitterIcon';
+export type { IconProps } from './types';

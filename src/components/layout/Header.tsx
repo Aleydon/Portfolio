@@ -1,6 +1,5 @@
 'use client';
 
-import { HERO_DATA, NAV_ITEMS } from '@/lib/data';
 import {
   AnimatePresence,
   motion,
@@ -9,6 +8,8 @@ import {
 } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+
+import { HERO_DATA, NAV_ITEMS } from '@/lib/data';
 
 const DESKTOP_NAV = NAV_ITEMS.filter(item =>
   ['Home', 'Projects', 'Contact'].includes(item.label)

@@ -1,9 +1,11 @@
 'use client';
 
-import { contentfulLoader } from '@/lib/utils';
-import type { ProjectFeature } from '@/types';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+
+import { contentfulLoader } from '@/lib/utils';
+import type { ProjectFeature } from '@/types';
+
 import { isContentfulUrl, revealVariants, slideInVariants } from './types';
 
 interface ProjectFeaturesProps {

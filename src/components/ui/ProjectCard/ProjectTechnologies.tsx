@@ -1,7 +1,8 @@
 'use client';
 
-import { ICON_MAP, TECHNOLOGY_ICONS } from '@/lib/icons';
 import { motion } from 'framer-motion';
+
+import { ICON_MAP, TECHNOLOGY_ICONS } from '@/lib/icons';
 
 interface ProjectTechnologiesProps {
   technologies: string[];

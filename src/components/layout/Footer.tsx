@@ -1,7 +1,7 @@
 'use client';
 
-import { SOCIAL_LINKS } from '@/lib/data';
 import * as Icons from '@/components/ui/icons';
+import { SOCIAL_LINKS } from '@/lib/data';
 
 const iconMap = {
   facebook: Icons.FacebookIcon,

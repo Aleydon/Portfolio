@@ -1,16 +1,17 @@
 import {
+  type Asset,
+  createClient,
+  type Entry,
+  type EntrySkeletonType
+} from 'contentful';
+
+import {
   type NavItem,
   type Post,
   type Project,
   type ProjectFeature,
   type SocialLink
 } from '@/types';
-import {
-  createClient,
-  type Asset,
-  type Entry,
-  type EntrySkeletonType
-} from 'contentful';
 
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const ACCESS_TOKEN = process.env.CONTENTFUL_ACCESS_TOKEN;
@@ -26,6 +27,25 @@ export const contentfulClient = createClient({
 
 // --- Projects ---
 
+interface ContentfulFeatureFields {
+  featureTitle?: string;
+  title?: string;
+  featureDescription?: string;
+  description?: string;
+  featureImage?: Asset | Asset[];
+  image?: Asset | Asset[];
+  featureImages?: Asset[];
+  images?: Asset[];
+  gallery?: Asset[];
+  media?: Asset | Asset[];
+}
+
+type FeatureEntry = Entry<
+  EntrySkeletonType<ContentfulFeatureFields>,
+  undefined,
+  string
+>;
+
 interface ContentfulProjectFields {
   projectName: string;
   projectDescriptions: string;
@@ -36,7 +56,7 @@ interface ContentfulProjectFields {
   tag: string;
   repositoryUrl: string;
   projectLink: string;
-  features: Array<Entry<any, undefined, string>>;
+  features: FeatureEntry[];
 }
 
 type ProjectSkeleton = EntrySkeletonType<ContentfulProjectFields, 'portfolio'>;
@@ -53,8 +73,8 @@ export async function getContentfulProjects(): Promise<Project[]> {
 
       const gallery = Array.isArray(fields.projectGallery)
         ? fields.projectGallery
-            .map((asset: any) => asset.fields?.file?.url)
-            .filter((url): url is string => !!url)
+            .map(asset => asset.fields?.file?.url)
+            .filter((url): url is string => typeof url === 'string')
             .map(url => `https:${url}`)
         : [];
 
@@ -67,8 +87,8 @@ export async function getContentfulProjects(): Promise<Project[]> {
 
       const features: ProjectFeature[] = Array.isArray(fields.features)
         ? fields.features
-            .map((feature: any) => {
-              const fFields = feature.fields;
+            .map(feature => {
+              const fFields = feature.fields as ContentfulFeatureFields;
               if (!fFields) return null;
 
               const images =
@@ -82,10 +102,14 @@ export async function getContentfulProjects(): Promise<Project[]> {
               let imageUrls: string[] = [];
               if (Array.isArray(images)) {
                 imageUrls = images
-                  .map((asset: any) => asset.fields?.file?.url)
-                  .filter((url: string | undefined): url is string => !!url)
-                  .map((url: string) => `https:${url}`);
-              } else if (images?.fields?.file?.url) {
+                  .map(asset => asset.fields?.file?.url)
+                  .filter((url): url is string => typeof url === 'string')
+                  .map(url => `https:${url}`);
+              } else if (
+                !Array.isArray(images) &&
+                images?.fields?.file?.url &&
+                typeof images.fields.file.url === 'string'
+              ) {
                 imageUrls = [`https:${images.fields.file.url}`];
               }
 
@@ -178,7 +202,7 @@ export async function getNavItems(): Promise<NavItem[]> {
   try {
     const response = await contentfulClient.getEntries<NavItemSkeleton>({
       content_type: 'navItem',
-      order: ['fields.order' as any]
+      order: ['fields.order' as const]
     });
 
     return response.items.map(item => {
@@ -216,7 +240,7 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
         id: item.sys.id,
         label: fields.label,
         href: fields.href,
-        icon: fields.icon as any
+        icon: fields.icon as SocialLink['icon']
       };
     });
   } catch (error) {
@@ -241,7 +265,7 @@ export async function getPosts(): Promise<Post[]> {
   try {
     const response = await contentfulClient.getEntries<PostSkeleton>({
       content_type: 'post',
-      order: ['-fields.date' as any]
+      order: ['-fields.date' as const]
     });
 
     return response.items.map(item => {

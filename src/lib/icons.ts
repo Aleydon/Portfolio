@@ -1,6 +1,7 @@
+import type { ComponentType } from 'react';
+
 import * as Icons from '@/components/ui/icons';
 import type { IconProps } from '@/components/ui/icons/types';
-import type { ComponentType } from 'react';
 
 export type IconName =
   | 'react'

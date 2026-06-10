@@ -1,8 +1,10 @@
 'use client';
 
-import { contentfulLoader } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+
+import { contentfulLoader } from '@/lib/utils';
+
 import { isContentfulUrl, revealVariants } from './types';
 
 interface ProjectGalleryProps {
