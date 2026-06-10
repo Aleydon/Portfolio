@@ -10,8 +10,7 @@ import { HERO_DATA } from '@/lib/data';
 
 const fadeInUp: Variants = {
   initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  animate: { opacity: 1, y: 0 }
 };
 
 const staggerContainer: Variants = {
@@ -112,14 +111,14 @@ export default function HeroSection() {
               variants={avatarVariants}
               initial="initial"
               animate="animate"
-              className="bg-brand-muted relative h-64 w-64 overflow-hidden rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-105 sm:h-80 sm:w-80 lg:h-[400px] lg:w-[400px]"
+              className="bg-brand-muted relative h-64 w-64 overflow-hidden rounded-full shadow-2xl transition-transform duration-500 hover:scale-105 sm:h-80 sm:w-80 lg:h-[400px] lg:w-[400px]"
             >
               <Image
                 src={HERO_DATA.avatarUrl}
                 alt={HERO_DATA.avatarAlt}
                 fill
                 sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 400px"
-                className="object-cover"
+                className="rounded-full object-cover"
                 priority
               />
             </motion.div>
