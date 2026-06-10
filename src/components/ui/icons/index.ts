@@ -2,9 +2,13 @@ export type { IconProps } from './types';
 
 export { CssIcon } from './CssIcon';
 export { DockerIcon } from './DockerIcon';
+export { FacebookIcon } from './FacebookIcon';
 export { GitHubIcon } from './GitHubIcon';
+export { InstagramIcon } from './InstagramIcon';
 export { JestIcon } from './JestIcon';
+export { LinkedInIcon } from './LinkedInIcon';
 export { NextIcon } from './NextIcon';
 export { PostgreSql } from './PostgreSql';
 export { ReactIcon } from './ReactIcon';
 export { TailwindIcon } from './TailwindIcon';
+export { TwitterIcon } from './TwitterIcon';

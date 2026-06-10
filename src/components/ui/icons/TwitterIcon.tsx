@@ -1,6 +1,6 @@
 import type { IconProps } from './types';
 
-export default function TwitterIcon({ className }: IconProps) {
+export function TwitterIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

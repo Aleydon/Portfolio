@@ -25,10 +25,10 @@ type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-[#FF5E5B] text-white shadow-[0_4px_16px_0_rgba(255,94,91,0.35)] hover:bg-[#e04845] hover:shadow-[0_6px_20px_0_rgba(255,94,91,0.45)] active:scale-[0.97]',
+    'bg-brand-accent text-white shadow-btn hover:opacity-90 active:scale-[0.97]',
   secondary:
-    'bg-white text-[#1a1f3a] border border-[#e8eaed] hover:border-[#FF5E5B] hover:text-[#FF5E5B] active:scale-[0.97]',
-  ghost: 'text-[#1a1f3a] hover:bg-black/5 active:scale-[0.97]'
+    'bg-white text-brand-primary border border-brand-border hover:border-brand-accent hover:text-brand-accent active:scale-[0.97]',
+  ghost: 'text-brand-primary hover:bg-black/5 active:scale-[0.97]'
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

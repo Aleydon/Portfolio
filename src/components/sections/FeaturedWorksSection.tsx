@@ -1,7 +1,7 @@
+import Container from '@/components/ui/Container';
+import ProjectCard from '@/components/ui/ProjectCard';
+import SectionLabel from '@/components/ui/SectionLabel';
 import { getContentfulProjects } from '@/lib/contentful';
-import Container from '../ui/Container';
-import ProjectCard from '../ui/ProjectCard';
-import SectionLabel from '../ui/SectionLabel';
 
 export default async function FeaturedWorksSection() {
   const allProjects = await getContentfulProjects();

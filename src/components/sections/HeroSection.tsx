@@ -3,17 +3,17 @@
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 import { HERO_DATA } from '@/lib/data';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   animate: {
     transition: {
       staggerChildren: 0.1
@@ -21,12 +21,30 @@ const staggerContainer = {
   }
 };
 
+const avatarVariants: Variants = {
+  initial: { opacity: 0, scale: 0.9 },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }
+  }
+};
+
+const rotateVariants: Variants = {
+  animate: {
+    rotate: 360,
+    transition: { duration: 20, repeat: Infinity, ease: 'linear' }
+  }
+};
+
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setIsMounted(true);
   }, []);
+
+  if (!isMounted) return null; // Avoid hydration mismatch or incomplete animations
 
   return (
     <section
@@ -39,11 +57,11 @@ export default function HeroSection() {
 
       <Container>
         <div className="flex flex-col-reverse items-center gap-12 text-center md:flex-row md:items-center md:justify-between md:gap-16 md:text-left">
-          {/* ── Text block ─────────────────────────────── */}
+          {/* Text block */}
           <motion.div
             variants={staggerContainer}
-            initial={mounted ? 'initial' : false}
-            animate={mounted ? 'animate' : false}
+            initial="initial"
+            animate="animate"
             className="flex max-w-2xl flex-col items-center md:items-start"
           >
             <motion.h1
@@ -86,14 +104,14 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* ── Avatar ─────────────────────────────────── */}
-          <motion.div
-            initial={mounted ? { opacity: 0, scale: 0.9 } : false}
-            animate={mounted ? { opacity: 1, scale: 1 } : false}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="relative"
-          >
-            <div className="bg-brand-muted relative h-64 w-64 overflow-hidden rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-105 sm:h-80 sm:w-80 lg:h-[400px] lg:w-[400px]">
+          {/* Avatar */}
+          <div className="relative">
+            <motion.div
+              variants={avatarVariants}
+              initial="initial"
+              animate="animate"
+              className="bg-brand-muted relative h-64 w-64 overflow-hidden rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-105 sm:h-80 sm:w-80 lg:h-[400px] lg:w-[400px]"
+            >
               <Image
                 src={HERO_DATA.avatarUrl}
                 alt={HERO_DATA.avatarAlt}
@@ -102,14 +120,15 @@ export default function HeroSection() {
                 className="object-cover"
                 priority
               />
-            </div>
+            </motion.div>
+
             {/* Decorative element */}
             <motion.div
-              animate={mounted ? { rotate: 360 } : false}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              variants={rotateVariants}
+              animate="animate"
               className="border-brand-accent/30 absolute -top-4 -right-4 -z-10 h-24 w-24 rounded-full border border-dashed"
             />
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

@@ -13,14 +13,14 @@ export default function SectionLabel({
 }: SectionLabelProps) {
   return (
     <div className="mb-6 flex items-center justify-between sm:mb-8">
-      <h2 className="text-lg font-semibold text-[#1a1f3a] sm:text-xl">
+      <h2 className="text-brand-primary text-lg font-semibold sm:text-xl">
         {children}
       </h2>
 
       {viewAllHref && (
         <Link
           href={viewAllHref}
-          className="hidden text-sm font-medium text-[#3d7aed] transition-colors duration-150 hover:text-[#FF5E5B] sm:block"
+          className="text-brand-accent hover:text-brand-primary hidden text-sm font-medium transition-colors duration-150 sm:block"
         >
           {viewAllLabel}
         </Link>

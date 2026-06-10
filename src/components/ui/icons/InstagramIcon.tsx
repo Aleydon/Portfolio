@@ -1,6 +1,6 @@
 import type { IconProps } from './types';
 
-export default function InstagramIcon({ className }: IconProps) {
+export function InstagramIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
