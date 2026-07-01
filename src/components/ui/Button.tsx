@@ -17,10 +17,14 @@ interface ButtonBaseProps {
 }
 
 type ButtonAsButton = ButtonBaseProps &
-  ButtonHTMLAttributes<HTMLButtonElement> & { as?: 'button' };
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className' | 'children'> & {
+    as?: 'button';
+  };
 
 type ButtonAsAnchor = ButtonBaseProps &
-  AnchorHTMLAttributes<HTMLAnchorElement> & { as: 'a' };
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className' | 'children'> & {
+    as: 'a';
+  };
 
 type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
@@ -54,17 +58,22 @@ export default function Button({
   );
 
   if (as === 'a') {
-    const anchorProps = props as AnchorHTMLAttributes<HTMLAnchorElement>;
     return (
-      <a className={styles} {...anchorProps}>
+      <a
+        className={styles}
+        {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
         {children}
       </a>
     );
   }
 
-  const buttonProps = props as ButtonHTMLAttributes<HTMLButtonElement>;
   return (
-    <button className={styles} type="button" {...buttonProps}>
+    <button
+      className={styles}
+      type="button"
+      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
       {children}
     </button>
   );

@@ -1,20 +1,22 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 
-import { contentfulLoader } from '@/lib/utils';
+import ImageWithBlur from '@/components/ui/ImageWithBlur';
+import { cn } from '@/lib/utils';
 
-import { isContentfulUrl, revealVariants } from './types';
+import { revealVariants } from './constants';
 
 interface ProjectGalleryProps {
   title: string;
   gallery: string[];
+  isPortrait?: boolean;
 }
 
 export default function ProjectGallery({
   title,
-  gallery
+  gallery,
+  isPortrait = false
 }: ProjectGalleryProps) {
   if (!Array.isArray(gallery) || gallery.length <= 1) return null;
 
@@ -32,25 +34,17 @@ export default function ProjectGallery({
             viewport={{ once: true }}
             variants={revealVariants}
             whileHover={{ y: -12, scale: 1.02 }}
-            className="bg-brand-muted relative aspect-[4/5] overflow-hidden rounded-3xl ring-1 shadow-2xl ring-black/5 sm:aspect-[16/10]"
+            className={cn(
+              'bg-brand-muted relative overflow-hidden rounded-3xl ring-1 shadow-2xl ring-black/5',
+              isPortrait
+                ? 'aspect-[9/16] sm:aspect-[3/4] lg:aspect-[9/16]'
+                : 'aspect-[16/9] sm:aspect-[16/9]'
+            )}
           >
-            {/* Blurred background for different aspect ratios */}
-            <Image
-              loader={isContentfulUrl(url) ? contentfulLoader : undefined}
-              src={url}
-              alt=""
-              fill
-              sizes="10px"
-              className="scale-110 object-cover opacity-20 blur-2xl transition-transform duration-1000"
-              aria-hidden="true"
-            />
-            <Image
-              loader={isContentfulUrl(url) ? contentfulLoader : undefined}
+            <ImageWithBlur
               src={url}
               alt={`${title} gallery ${idx + 1}`}
-              fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="relative z-10 object-contain transition-transform duration-1000 hover:scale-110"
             />
           </motion.div>
         ))}

@@ -28,8 +28,7 @@ export const ICON_MAP: Record<IconName, ComponentType<IconProps>> = {
   postgresql: Icons.PostgreSql,
   github: Icons.GitHubIcon,
   jest: Icons.JestIcon,
-  // Mapping missing ones to most relevant or github as fallback for now
-  typescript: Icons.ReactIcon, // Placeholder or use a generic one
+  typescript: Icons.ReactIcon,
   javascript: Icons.ReactIcon,
   storybook: Icons.ReactIcon,
   vite: Icons.ReactIcon,
@@ -41,6 +40,7 @@ export const TECHNOLOGY_ICONS: Record<string, IconName> = {
   React: 'react',
   'Next.js': 'nextjs',
   Nextjs: 'nextjs',
+  'Next JS': 'nextjs',
   Tailwind: 'tailwind',
   'Tailwind CSS': 'tailwind',
   CSS: 'css',
@@ -50,9 +50,18 @@ export const TECHNOLOGY_ICONS: Record<string, IconName> = {
   GitHub: 'github',
   Jest: 'jest',
   TypeScript: 'typescript',
+  Typescript: 'typescript',
   Javascript: 'javascript',
+  JavaScript: 'javascript',
   Storybook: 'storybook',
   Vite: 'vite',
   Prisma: 'prisma',
   Drizzle: 'drizzle'
-};
+} as const;
+
+export function getTechnologyIcon(
+  tech: string
+): ComponentType<IconProps> | null {
+  const name = TECHNOLOGY_ICONS[tech];
+  return name ? ICON_MAP[name] : null;
+}

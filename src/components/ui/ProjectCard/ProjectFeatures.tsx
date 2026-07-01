@@ -1,18 +1,22 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 
-import { contentfulLoader } from '@/lib/utils';
+import ImageWithBlur from '@/components/ui/ImageWithBlur';
+import { cn } from '@/lib/utils';
 import type { ProjectFeature } from '@/types';
 
-import { isContentfulUrl, revealVariants, slideInVariants } from './types';
+import { revealVariants, slideInVariants } from './constants';
 
 interface ProjectFeaturesProps {
   features: ProjectFeature[];
+  isPortrait?: boolean;
 }
 
-export default function ProjectFeatures({ features }: ProjectFeaturesProps) {
+export default function ProjectFeatures({
+  features,
+  isPortrait = false
+}: ProjectFeaturesProps) {
   if (!Array.isArray(features) || features.length === 0) return null;
 
   return (
@@ -33,11 +37,8 @@ export default function ProjectFeatures({ features }: ProjectFeaturesProps) {
               className="bg-brand-muted/5 border-brand-accent/5 relative overflow-hidden rounded-[2.5rem] border p-6 sm:p-10 md:p-12 lg:p-16"
             >
               <div
-                className={`flex flex-col items-start gap-10 sm:gap-12 md:flex-row md:items-center ${
-                  isEven ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
+                className={`flex flex-col items-start gap-10 sm:gap-12 md:flex-row md:items-center ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}
               >
-                {/* Feature Text */}
                 <motion.div
                   variants={slideInVariants(isEven ? 'left' : 'right')}
                   className="flex-1 space-y-4 sm:space-y-6"
@@ -55,7 +56,6 @@ export default function ProjectFeatures({ features }: ProjectFeaturesProps) {
                   </p>
                 </motion.div>
 
-                {/* Feature Images Gallery */}
                 {Array.isArray(feature.imageUrls) &&
                   feature.imageUrls.length > 0 && (
                     <motion.div
@@ -67,33 +67,18 @@ export default function ProjectFeatures({ features }: ProjectFeaturesProps) {
                           <motion.div
                             key={imgIdx}
                             whileHover={{ scale: 1.03, y: -5 }}
-                            className="bg-brand-muted relative aspect-[4/5] w-full overflow-hidden rounded-3xl ring-1 shadow-2xl ring-black/5 sm:aspect-[16/9]"
+                            className={cn(
+                              'bg-brand-muted relative w-full overflow-hidden rounded-3xl ring-1 shadow-2xl ring-black/5',
+                              isPortrait
+                                ? 'aspect-[9/16] sm:aspect-[3/4]'
+                                : 'aspect-[16/9] sm:aspect-[16/9]'
+                            )}
                           >
-                            {/* Blurred background for different aspect ratios */}
-                            <Image
-                              loader={
-                                isContentfulUrl(url)
-                                  ? contentfulLoader
-                                  : undefined
-                              }
-                              src={url}
-                              alt=""
-                              fill
-                              sizes="10px"
-                              className="scale-110 object-cover opacity-20 blur-2xl transition-transform duration-1000"
-                              aria-hidden="true"
-                            />
-                            <Image
-                              loader={
-                                isContentfulUrl(url)
-                                  ? contentfulLoader
-                                  : undefined
-                              }
+                            <ImageWithBlur
                               src={url}
                               alt={`${feature.title} image ${imgIdx + 1}`}
-                              fill
                               sizes="(max-width: 768px) 100vw, 50vw"
-                              className="relative z-10 object-contain transition-transform duration-1000 hover:scale-105"
+                              imageClassName="relative z-10 object-contain transition-transform duration-1000 hover:scale-105"
                             />
                           </motion.div>
                         ))}

@@ -4,17 +4,19 @@ import { motion } from 'framer-motion';
 
 import type { Project } from '@/types';
 
+import { revealVariants } from './constants';
 import ProjectFeatures from './ProjectFeatures';
 import ProjectGallery from './ProjectGallery';
 import ProjectTechnologies from './ProjectTechnologies';
-import { revealVariants } from './types';
 
 interface ProjectExpandedContentProps {
   project: Project;
+  isPortrait?: boolean;
 }
 
 export default function ProjectExpandedContent({
-  project
+  project,
+  isPortrait = false
 }: ProjectExpandedContentProps) {
   return (
     <div className="mt-12 flex flex-col gap-12 pb-8 sm:gap-16">
@@ -43,11 +45,17 @@ export default function ProjectExpandedContent({
 
       {/* Gallery Section */}
       {project.gallery && (
-        <ProjectGallery title={project.title} gallery={project.gallery} />
+        <ProjectGallery
+          title={project.title}
+          gallery={project.gallery}
+          isPortrait={isPortrait}
+        />
       )}
 
       {/* Features Section */}
-      {project.features && <ProjectFeatures features={project.features} />}
+      {project.features && (
+        <ProjectFeatures features={project.features} isPortrait={isPortrait} />
+      )}
     </div>
   );
 }

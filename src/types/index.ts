@@ -19,6 +19,7 @@ export interface Project {
   title: string;
   year: string;
   tag: string;
+  platform?: string;
   excerpt: string;
   description?: string;
   imageUrl: string;

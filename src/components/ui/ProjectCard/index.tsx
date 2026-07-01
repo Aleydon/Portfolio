@@ -1,15 +1,16 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
 import { useState } from 'react';
 
+import ImageWithBlur from '@/components/ui/ImageWithBlur';
 import Tag from '@/components/ui/Tag';
-import { contentfulLoader } from '@/lib/utils';
+import { isPortraitProject } from '@/lib/image';
+import { cn } from '@/lib/utils';
 import type { Project } from '@/types';
 
+import { revealVariants, textVariants } from './constants';
 import ProjectExpandedContent from './ProjectExpandedContent';
-import { isContentfulUrl, revealVariants, textVariants } from './types';
 
 interface ProjectCardProps {
   project: Project;
@@ -17,6 +18,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const isPortrait = isPortraitProject(project);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -33,53 +35,36 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     >
       <div
         onClick={toggleExpand}
-        className={`relative flex cursor-pointer flex-col gap-6 rounded-[2.5rem] border transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:gap-8 ${
+        className={cn(
+          'relative flex cursor-pointer flex-col gap-6 rounded-[2.5rem] border transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:gap-8',
           isExpanded
             ? 'border-black/10 bg-white p-4 ring-1 shadow-2xl ring-black/5 sm:p-8 lg:p-10'
             : 'border-transparent bg-white/40 p-3 backdrop-blur-sm hover:border-black/5 hover:bg-white/80 hover:shadow-2xl sm:p-6'
-        }`}
+        )}
       >
-        {/* Main Row: Thumbnail and Summary */}
         <div className="flex flex-col gap-8 md:flex-row lg:gap-12">
-          {/* Thumbnail - Large Rounded Card Look */}
           <div className="bg-brand-muted relative w-full flex-shrink-0 overflow-hidden rounded-[2rem] sm:w-80 md:w-[400px] lg:w-[400px]">
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="relative aspect-[4/5] w-full sm:aspect-[16/10] md:aspect-[4/5]"
+              className={cn(
+                'relative w-full',
+                isPortrait
+                  ? 'aspect-[9/16] sm:aspect-[3/4] md:aspect-[9/16]'
+                  : 'aspect-[16/9] sm:aspect-[16/9] md:aspect-[16/9]'
+              )}
             >
-              {/* Blurred background for portrait images */}
-              <Image
-                loader={
-                  isContentfulUrl(project.imageUrl)
-                    ? contentfulLoader
-                    : undefined
-                }
-                src={project.imageUrl}
-                alt="Default project image"
-                fill
-                sizes="10px"
-                className="scale-110 rounded-2xl object-cover opacity-30 blur-2xl transition-transform duration-700"
-                aria-hidden="true"
-              />
-              <Image
-                loader={
-                  isContentfulUrl(project.imageUrl)
-                    ? contentfulLoader
-                    : undefined
-                }
+              <ImageWithBlur
                 src={project.imageUrl}
                 alt={project.imageAlt}
-                fill
                 sizes="(max-width: 768px) 100vw, 600px"
-                className="relative z-10 object-contain transition-transform duration-700 group-hover:scale-100"
-                priority={false}
+                blurClassName="scale-110 rounded-2xl object-cover opacity-30 blur-2xl transition-transform duration-700"
+                imageClassName="relative z-10 object-contain transition-transform duration-700 group-hover:scale-100"
+                overlayClassName="bg-linear-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
               />
-              <div className="absolute inset-0 z-20 bg-linear-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             </motion.div>
           </div>
 
-          {/* Content */}
           <div className="flex flex-1 flex-col justify-center py-2">
             <div className="mb-4 flex items-center justify-between">
               <motion.h3
@@ -120,82 +105,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </motion.p>
 
             <div className="mt-auto flex items-center justify-between">
-              <button
-                onClick={e => {
-                  e.stopPropagation();
-                  toggleExpand();
-                }}
-                className="text-brand-primary hover:text-brand-accent group/btn flex items-center gap-4 text-xs font-black tracking-[0.2em] uppercase transition-all active:scale-95 sm:text-sm"
-              >
-                <span className="relative">
-                  {isExpanded ? 'Hide Details' : 'View Project'}
-                  <motion.span
-                    className="bg-brand-accent absolute -bottom-2 left-0 h-[3px] w-full origin-left rounded-full"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: isExpanded ? 1 : 0 }}
-                    whileHover={{ scaleX: 1 }}
-                  />
-                </span>
-                <motion.div
-                  animate={{
-                    rotate: isExpanded ? 180 : 0,
-                    y: isExpanded ? 0 : [0, 3, 0]
-                  }}
-                  transition={{
-                    rotate: { type: 'spring', stiffness: 200, damping: 15 },
-                    y: { repeat: Infinity, duration: 2, ease: 'easeInOut' }
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="m6 9 6 6 6-6" />
-                  </svg>
-                </motion.div>
-              </button>
+              <ExpandButton isExpanded={isExpanded} onToggle={toggleExpand} />
 
-              {project.repoUrl && (
-                <motion.a
-                  onClick={e => {
-                    e.stopPropagation();
-                  }}
-                  whileHover={{ scale: 1.15, rotate: 8, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
-                  href={project.repoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-brand-primary hover:bg-brand-accent rounded-2xl p-3 text-white shadow-xl transition-all duration-300 sm:p-3.5"
-                  title="View Repository"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                    <path d="M9 18c-4.51 2-5-2-7-2" />
-                  </svg>
-                </motion.a>
-              )}
+              {project.repoUrl && <RepoLink href={project.repoUrl} />}
             </div>
           </div>
         </div>
 
-        {/* Expanded Content */}
         <AnimatePresence mode="wait">
           {isExpanded && (
             <motion.div
@@ -205,11 +121,104 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="w-full overflow-hidden"
             >
-              <ProjectExpandedContent project={project} />
+              <ProjectExpandedContent
+                project={project}
+                isPortrait={isPortrait}
+              />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
     </motion.article>
+  );
+}
+
+function ExpandButton({
+  isExpanded,
+  onToggle
+}: {
+  isExpanded: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      onClick={e => {
+        e.stopPropagation();
+        onToggle();
+      }}
+      className="text-brand-primary hover:text-brand-accent group/btn flex items-center gap-4 text-xs font-black tracking-[0.2em] uppercase transition-all active:scale-95 sm:text-sm"
+    >
+      <span className="relative">
+        {isExpanded ? 'Hide Details' : 'View Project'}
+        <motion.span
+          className="bg-brand-accent absolute -bottom-2 left-0 h-[3px] w-full origin-left rounded-full"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: isExpanded ? 1 : 0 }}
+          whileHover={{ scaleX: 1 }}
+        />
+      </span>
+      <motion.div
+        animate={{
+          rotate: isExpanded ? 180 : 0,
+          y: isExpanded ? 0 : [0, 3, 0]
+        }}
+        transition={{
+          rotate: { type: 'spring', stiffness: 200, damping: 15 },
+          y: { repeat: Infinity, duration: 2, ease: 'easeInOut' }
+        }}
+      >
+        <ChevronDownIcon />
+      </motion.div>
+    </button>
+  );
+}
+
+function ChevronDownIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
+function RepoLink({ href }: { href: string }) {
+  return (
+    <motion.a
+      onClick={e => {
+        e.stopPropagation();
+      }}
+      whileHover={{ scale: 1.15, rotate: 8, y: -2 }}
+      whileTap={{ scale: 0.9 }}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-brand-primary hover:bg-brand-accent rounded-2xl p-3 text-white shadow-xl transition-all duration-300 sm:p-3.5"
+      title="View Repository"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+        <path d="M9 18c-4.51 2-5-2-7-2" />
+      </svg>
+    </motion.a>
   );
 }

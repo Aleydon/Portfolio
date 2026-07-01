@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-import { ICON_MAP, TECHNOLOGY_ICONS } from '@/lib/icons';
+import { getTechnologyIcon } from '@/lib/icons';
 
 interface ProjectTechnologiesProps {
   technologies: string[];
@@ -20,8 +20,7 @@ export default function ProjectTechnologies({
       </h4>
       <div className="flex flex-wrap gap-4 px-2 sm:gap-6">
         {technologies.map((tech, i) => {
-          const iconName = TECHNOLOGY_ICONS[tech];
-          const IconComponent = iconName ? ICON_MAP[iconName] : null;
+          const IconComponent = getTechnologyIcon(tech);
 
           return (
             <motion.div

@@ -7,19 +7,7 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 import { HERO_DATA } from '@/lib/data';
-
-const fadeInUp: Variants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 }
-};
-
-const staggerContainer: Variants = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+import { fadeInUp, staggerContainer } from '@/types/animations';
 
 const avatarVariants: Variants = {
   initial: { opacity: 0, scale: 0.9 },
@@ -69,7 +57,7 @@ export default function HeroSection() {
               variants={fadeInUp}
               className="text-brand-primary mb-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
             >
-              Hi, I am Roberto,
+              Olá, sou
               <br />
               <span className="text-brand-accent">{HERO_DATA.title}</span>
             </motion.h1>
@@ -91,7 +79,7 @@ export default function HeroSection() {
                 size="lg"
                 className="rounded-full px-8"
               >
-                Download Resume
+                Baixar Currículo
               </Button>
               <Button
                 variant="secondary"
@@ -100,7 +88,7 @@ export default function HeroSection() {
                 size="lg"
                 className="rounded-full px-8"
               >
-                View Projects
+                Ver Projetos
               </Button>
             </motion.div>
           </motion.div>
